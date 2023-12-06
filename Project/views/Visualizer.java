@@ -303,11 +303,6 @@ public class Visualizer {
             new Thread(() -> gameControl.GamePlay("Play")).start();
 //            gameControl.GamePlay("Play");
         }
-        PauseTransition pause = new PauseTransition(Duration.seconds(5));
-        pause.setOnFinished(event -> {
-            Platform.exit();
-        });
-        pause.play();
     }
 
     /**
