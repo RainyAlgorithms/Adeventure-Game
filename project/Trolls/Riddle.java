@@ -2,7 +2,7 @@ package Trolls;
 
 import java.util.Random;
 import java.util.Scanner;
-public class Riddle {
+public class Riddle implements Troll{
     /**
      * riddles and answers
      */
@@ -46,18 +46,23 @@ public class Riddle {
         return chosenOption;
     }
 
+    public String giveInstructions()
+    {
+        return "Ah, greetings, dear interlocutors! \n" +
+                "Prepare your intellect for a delightful dance with enigma. \n" +
+                "Behold, as the Riddler unveils mysteries woven with the threads of complexity. \n" +
+                "What has keys but can't open locks? \n" +
+                "Riddle me this, and perhaps you shall glimpse the brilliance that dances within the shadows of my mind! \n" +
+                "But beware, mere mortals, for you have only three chances to unravel the strands of my puzzle and bask in the sweet taste of victory!";
+    }
+
     /**
      * play the troll
      * @return true if player win, false if lost
      */
     public boolean playGame(){
         Integer x = guess_witch_one_it_is();
-        System.out.println("Ah, greetings, dear interlocutors! \n" +
-                "Prepare your intellect for a delightful dance with enigma. \n" +
-                "Behold, as the Riddler unveils mysteries woven with the threads of complexity. \n" +
-                "What has keys but can't open locks? \n" +
-                "Riddle me this, and perhaps you shall glimpse the brilliance that dances within the shadows of my mind! \n" +
-                "But beware, mere mortals, for you have only three chances to unravel the strands of my puzzle and bask in the sweet taste of victory!");
+
         System.out.println("");
         String y = "1145141919";
         if(x==1){

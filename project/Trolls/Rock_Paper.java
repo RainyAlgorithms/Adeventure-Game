@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 
-public class Rock_Paper{
+public class Rock_Paper implements Troll{
     /**
      * compute the player's input is Valid
      *
@@ -73,11 +73,9 @@ public class Rock_Paper{
     /**
      * Print GameTroll instructions for the user
      */
-    public void giveInstructions()
+    public String giveInstructions()
     {
-        System.out.print("I am a Game TROLL. You must beat me at my game to pass.\n");
-        System.out.print("We play rock, paper, scissors\n");
-        System.out.print("Enter your choice (R, P, S): \n>");
+        return "I am a Game TROLL. You must beat me at my game to pass.\nWe play rock, paper, scissors\nEnter your choice (R, P, S): \n>";
     }
 
 

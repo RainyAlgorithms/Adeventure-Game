@@ -3,16 +3,18 @@ package Trolls;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Tic_Tac_Toe {
+public class Tic_Tac_Toe implements Troll{
     /**
      * play the troll
-     * @return true if player win, false if lost
      */
-    public boolean playGame() {
-        System.out.println("Tic Tac Toe  played on a 3x3 grid. \n" +
+    public String giveInstructions()
+    {
+        return "Tic Tac Toe  played on a 3x3 grid. \n" +
                 "You are X and computer is O in empty cells, aiming to create a row of 3 of their symbols either horizontally, vertically, or diagonally. \n" +
-                "If you got into a tie or win the computer you win. \n" +
-                "enter the number in each space to make a move");
+                "If you got into a tie or win against the computer, you win. \n" +
+                "enter the number in each space to make a move";
+    }
+    public boolean playGame() {
         char[] board = {' ', ' ', ' ',' ', ' ', ' ',' ', ' ', ' '};
         System.out.println("[1] [2] [3]\n" +
                            "[4] [5] [6]\n" +
