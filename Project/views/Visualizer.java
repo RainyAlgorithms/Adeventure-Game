@@ -39,9 +39,11 @@ public class Visualizer {
 
     GameController gameControl; //model of the game
     Stage stage; //stage on which all is rendered
-    Button quitButton, dieButton, helpButton; //buttons
+    Button quitButton, dieButton, helpButton, infoButton; //buttons
     Boolean helpToggle = false; //is help on display?
     Boolean squareToggle = false;
+
+    Boolean infoToggle = false;
 
     GridPane gridPane = new GridPane(); //to hold images and buttons
     Label roomDescLabel = new Label(); //to hold room description and/or instructions
@@ -116,14 +118,20 @@ public class Visualizer {
         makeButtonAccessible(dieButton, "Die Button", "This button rolls the die.", "This button rolls the die. Click it in order to land a number 1 - 4 and move that many number of squares.");
         addDiceEvent();
 
-        helpButton = new Button("Instructions");
-        helpButton.setId("Instructions");
-        customizeButton(helpButton, 200, 50);
+        helpButton = new Button("Help");
+        helpButton.setId("Help");
+        customizeButton(helpButton, 100, 50);
         makeButtonAccessible(helpButton, "Help Button", "This button gives game instructions.", "This button gives instructions on the game controls. Click it to learn how to play.");
         addInstructionEvent();
 
+        infoButton = new Button("Info");
+        infoButton.setId("Info");
+        customizeButton(infoButton, 100, 50);
+        makeButtonAccessible(infoButton, "Info Button", "This button gives game instructions.", "This button gives instructions on the game controls. Click it to learn how to play.");
+        addInfoEvent();
+
         HBox topButtons = new HBox();
-        topButtons.getChildren().addAll(dieButton, helpButton, quitButton);
+        topButtons.getChildren().addAll(dieButton, helpButton, quitButton, infoButton);
         topButtons.setSpacing(10);
         topButtons.setAlignment(Pos.CENTER);
 
@@ -176,7 +184,6 @@ public class Visualizer {
         this.stage.setResizable(false);
         this.stage.show();
     }
-
 
     /**
      * makeButtonAccessible
@@ -296,6 +303,11 @@ public class Visualizer {
             new Thread(() -> gameControl.GamePlay("Play")).start();
 //            gameControl.GamePlay("Play");
         }
+        PauseTransition pause = new PauseTransition(Duration.seconds(5));
+        pause.setOnFinished(event -> {
+            Platform.exit();
+        });
+        pause.play();
     }
 
     /**
@@ -569,7 +581,6 @@ public class Visualizer {
 
     public void showSquare(String button_number)
     {
-
         gridPane.getChildren().removeIf(grid ->
                 GridPane.getColumnIndex(grid) == 1 && GridPane.getRowIndex(grid) == 1);
 
@@ -577,7 +588,7 @@ public class Visualizer {
         {
             Button hideSquareButton = new Button("Hide Square Info");
             customizeButton(hideSquareButton, 200, 20);
-            makeButtonAccessible(hideSquareButton, "Hide Square Info", "Hide Square Info", "Use this button to close the square informaion.");
+            makeButtonAccessible(hideSquareButton, "Hide Square Info", "Hide Square Info", "Use this button to close the square information.");
             hideSquareButton.setOnAction(e -> showSquare(button_number));
 
             String squareStr = "Square " + button_number;
@@ -634,6 +645,156 @@ public class Visualizer {
 
     }
 
+    public void displayInfo()
+    {
+        gridPane.getChildren().removeIf(grid ->
+                GridPane.getColumnIndex(grid) == 1 && GridPane.getRowIndex(grid) == 1);
+
+        if (!infoToggle)
+        {
+            Button hideinfoButton = new Button("Hide Info");
+            customizeButton(hideinfoButton, 200, 20);
+            makeButtonAccessible(hideinfoButton, "Hide Info", "Hide Info", "Use this button to close the player information.");
+            hideinfoButton.setOnAction(e -> displayInfo());
+
+            String player1 = "";
+            String player2 = "";
+            String player3 = "";
+            String player4 = "";
+
+            Player p1 = gameControl.getAllPlayers().get(0);
+
+            player1 = p1.getName() + "\nInventory: ";
+            
+            for (GameObj inv : p1.getInventory())
+            {
+                player1 = player1 + inv.getName();
+            }
+
+            if (p1.getInventory().isEmpty())
+            {
+                player1 = player1 + "No objects";
+            }
+            if (p1.getPosition() == null)
+            {
+                player1 = player1 + "\nPlayer has died or quit.";
+            }
+            else
+            {
+                player1 = player1 + "\nPosition: Square" + p1.getPosition().get_room_No();
+            }
+            if (p1.getPosition().get_room_No() == 15)
+            {
+                player1 = player1 + "\nPlayer has reached the finish line.";
+            }
+            player1 = player1 + "\n\n";
+
+            Player p2 = gameControl.getAllPlayers().get(1);
+
+            player2 = p2.getName() + "\nInventory: ";
+
+            for (GameObj inv : p2.getInventory())
+            {
+                player2 = player2 + inv.getName();
+            }
+
+            if (p2.getInventory().isEmpty())
+            {
+                player2 = player2 + "No objects";
+            }
+            if (p2.getPosition() == null)
+            {
+                player2 = player2 + "\nPlayer has died or quit.";
+            }
+            else
+            {
+                player2 = player2 + "\nPosition: Square" + p2.getPosition().get_room_No();
+            }
+            if (p2.getPosition().get_room_No() == 15)
+            {
+                player2 = player2 + "\nPlayer has reached the finish line.";
+            }
+            player2 = player2 + "\n\n";
+
+            Player p3 = gameControl.getAllPlayers().get(2);
+
+            player3 = p3.getName() + "\nInventory: ";
+
+            for (GameObj inv : p3.getInventory())
+            {
+                player3 = player3 + inv.getName();
+            }
+
+            if (p3.getInventory().isEmpty())
+            {
+                player3 = player3 + "No objects";
+            }
+            if (p3.getPosition() == null)
+            {
+                player3 = player3 + "\nPlayer has died or quit.";
+            }
+            else
+            {
+                player3 = player3 + "\nPosition: Square" + p3.getPosition().get_room_No();
+            }
+            if (p3.getPosition().get_room_No() == 15)
+            {
+                player3 = player3 + "\nPlayer has reached the finish line.";
+            }
+            player3 = player3 + "\n\n";
+
+            Player p4 = gameControl.getAllPlayers().get(3);
+
+            player4 = p4.getName() + "\nInventory: ";
+
+            for (GameObj inv : p4.getInventory())
+            {
+                player4 = player4 + inv.getName();
+            }
+
+            if (p4.getInventory().isEmpty())
+            {
+                player4 = player4 + "No objects";
+            }
+            if (p4.getPosition() == null)
+            {
+                player4 = player4 + "\nPlayer has died or quit.";
+            }
+            else
+            {
+                player4 = player4 + "\nPosition: Square" + p4.getPosition().get_room_No();
+            }
+            if (p4.getPosition().get_room_No() == 15)
+            {
+                player4 = player4 + "\nPlayer has reached the finish line.";
+            }
+            player4 = player4 + "\n\n";
+
+            String finalString = player1 + player2 + player3 + player4;
+
+            Label squareText = new Label(finalString);
+            squareText.setStyle("-fx-text-fill: white;");
+            squareText.setFont(new Font("Times New Roman", 16));
+            squareText.setWrapText(true);
+
+            VBox vbox = new VBox(hideinfoButton, squareText);
+            vbox.setAlignment(Pos.CENTER);
+
+            ScrollPane scroll = new ScrollPane(vbox);
+            scroll.setStyle("-fx-background: black;");
+            scroll.setFitToWidth(true);
+
+            gridPane.add(scroll, 1, 1);
+            infoToggle = true;
+        }
+        else
+        {
+            infoToggle = false;
+            updateScene();
+            updateItems();
+        }
+    }
+
     /**
      * This method handles the event related to the
      * help button.
@@ -668,6 +829,14 @@ public class Visualizer {
             String[] buttonName = squareButton.getText().split(" ");
             String buttonNumber = buttonName[1];
             showSquare(buttonNumber);
+        });
+    }
+
+    public void addInfoEvent()
+    {
+        infoButton.setOnAction(e -> {
+            stopArticulation();
+            displayInfo();
         });
     }
 
